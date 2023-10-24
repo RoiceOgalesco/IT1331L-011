@@ -1,8 +1,11 @@
 package com.uap.it1311l.registrationapi.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.uap.it1311l.registrationapi.model.Attendee;
@@ -23,5 +26,17 @@ public class RegistrationController {
     public List<Attendee> getAttendees()
     {
         return registrationRepo.findAll();
+    }
+	
+	@PutMapping("/event/survey/eligibility")
+    public List<Attendee> update() {
+        registrationRepo.updateEligibility();
+        return registrationRepo.findAll(); 
+    }
+    
+    @DeleteMapping("/event/registration/{id}")
+    public String deleteAttendee(@PathVariable String id) {
+    	    registrationRepo.DeleteId(id);
+            return "ID " + id + "Deleted!";
     }
 }
